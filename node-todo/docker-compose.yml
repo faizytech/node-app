@@ -1,0 +1,17 @@
+version: "3"             # docker-compose version         
+services:                # Application services (backend, database, redis etc)
+  web:                   # First service that is "Web app"       
+    build: .             # Build context (where code exist) 
+    ports:               # Ports that need to be exposed
+    - "8080:8080"
+    depends_on:          # Wait for mentioned service to start first
+    - mongo
+    restart: always
+  mongo:                 # Second service that is "mongo" database       
+    image: mongo
+    volumes:             # Bind volumes for persistent data        
+      - db:/data/db
+    ports:               # Ports that need to be exposed       
+    - "27017:27017" 
+volumes:                 # Create mentioned volume to persist database data,       
+   db:                   
